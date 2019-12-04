@@ -9,6 +9,27 @@ button {
     z-index:100;
 }
 
+.startButtonForPT {
+  position: absolute;
+  z-index: 101;
+  top:500px;
+  left: 1000px;
+}
+
+.startButtonForPartner {
+  position: absolute;
+  z-index: 101;
+  top:500px;
+  left: 1000px;
+}
+
+.startButtonForBodyProfile {
+  position: absolute;
+  z-index: 101;
+  top:500px;
+  left: 1000px;
+}
+
 .swiper-container {
     width: 1920px;
     height: 980px;

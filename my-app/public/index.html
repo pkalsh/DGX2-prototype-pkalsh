@@ -8,19 +8,29 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <img src="NavBar.png">
-    <div id="map" style="width:960px;height:350px;"></div>
+    <img src="NavBar_NoLogin.png">
+    
+    <!-- <div id="map" style="width:960px;height:350px;"></div> -->
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="test1.png"></div>
-      <div class="swiper-slide"><img src="test1.png"></div>
-      <div class="swiper-slide"><img src="test1.png"></div>
+      <div class="swiper-slide">
+        <img src="test1.png">
+        <img class="startButtonForPT" src="Home_Start.png">
+      </div>
+      <div class="swiper-slide">
+        <img src="test1.png">
+        <img class="startButtonForPartner" src="Home_Start.png">
+      </div>
+      <div class="swiper-slide">
+        <img src="test1.png">
+        <img class="startButtonForBodyProfile" src="Home_Start.png">
+      </div>
     </div>
     <div class="swiper-pagination"></div>
   </div>
   <script src="swiper/js/swiper.js"></script>
   <script src="index.js"></script>
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=35b5d9e3fd60bf5f6ff10fd44650226c"></script>
+  <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=35b5d9e3fd60bf5f6ff10fd44650226c"></script>
   <script>
   var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
       mapOption = { 
@@ -30,7 +40,7 @@
   
   // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
   var map = new kakao.maps.Map(mapContainer, mapOption); 
-  </script>
+  </script> -->
   </body>
   </html>
 </body>
