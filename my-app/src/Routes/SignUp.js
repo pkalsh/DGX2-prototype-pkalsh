@@ -56,23 +56,22 @@ export default function SignUp() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
+        <Typography component="h1" variant="h3">
+        <br></br>
+          회원가입
         </Typography>
+        <br></br>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="lName"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="lName"
+                label="성"
                 autoFocus
                 color="secondary"
               />
@@ -82,10 +81,10 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                id="firstName"
+                label="이름"
+                name="firstName"
+                autoComplete="firstName"
                 color="secondary"
               />
             </Grid>
@@ -95,7 +94,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="이메일 주소"
                 name="email"
                 autoComplete="email"
                 color="secondary"
@@ -107,7 +106,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="비밀번호"
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -124,19 +123,19 @@ export default function SignUp() {
             color="secondary"
             className={classes.submit}
           >
-            Sign Up
+            가입하기
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
+              <br></br>
               <Link href="signin" variant="body2" color="secondary">
-                Already have an account?
+                이미 계정이 있으신가요?
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
       <Box mt={5}>
-        <Copyright />
       </Box>
     </Container>
   );

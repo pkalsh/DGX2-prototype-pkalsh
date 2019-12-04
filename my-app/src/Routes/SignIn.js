@@ -59,20 +59,20 @@ export default function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
+        <Typography component="h1" variant="h3">
+          <br></br>
+          환영합니다!
+          <br></br>
         </Typography>
         <form className={classes.form} noValidate>
+        <br></br>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="아이디"
             name="email"
             autoComplete="email"
             autoFocus
@@ -84,7 +84,7 @@ export default function SignIn() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="비밀번호"
             type="password"
             id="password"
             autoComplete="current-password"
@@ -92,7 +92,7 @@ export default function SignIn() {
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="secondary" />}
-            label="Remember me"
+            label="자동 로그인"
           />
           <Button
             type="submit"
@@ -101,24 +101,21 @@ export default function SignIn() {
             color="secondary"
             className={classes.submit}
           >
-            Sign In
+            로그인
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" color="secondary">
-                Forgot password?
-              </Link>
             </Grid>
             <Grid item>
               <Link href="signup" variant="body2" color="secondary">
-                {"Don't have an account?"}
+                <br></br>
+                {"방문이 처음이신가요?"}
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
       <Box mt={8}>
-        <Copyright />
       </Box>
     </Container>
     </React.Fragment>

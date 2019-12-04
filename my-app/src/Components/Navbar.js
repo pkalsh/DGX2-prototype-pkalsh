@@ -1,9 +1,10 @@
 import React from 'react';
+import { Button } from '@material-ui/core';
 
 export default () => {
     return (
     <React.Fragment>
-        <img src="../Images/NavBar_NoLogin.png"></img>
+        <img className="navBar" src="../Images/NavBar_NoLogin.png"></img>
     </React.Fragment>
     );
 }

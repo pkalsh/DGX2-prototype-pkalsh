@@ -1,19 +1,44 @@
 import React from 'react';
+import { Fade } from 'react-slideshow-image';
 
-export default () => {
-    return (
-        <React.Fragment>
-            <div className="swiper-container">
-                <div className="swiper-wrapper">
-                    <div className="swiper-slide">
-                        <img src="../Images/test1.png"></img>
-                        <img className="startButtonForPT" src="../Images/Home_start.png"></img>
-                    </div>
-                </div>
-                <div className="swiper-pagination"></div>
-            </div>
-            <script src="swiper/js/swiper.js"></script>
-            <script src="index.js"></script>
-        </React.Fragment>
-    );
+const fadeImages = [
+  'Images/test1.png',
+  'images/test1.png',
+  'images/test1.png'
+];
+
+const fadeProperties = {
+  duration: 5000,
+  transitionDuration: 500,
+  infinite: true,
+  indicators: true,
+  onChange: (oldIndex, newIndex) => {
+    console.log(`fade transition from ${oldIndex} to ${newIndex}`);
+  }
 }
+
+const Slideshow = () => {
+  return (
+    <div className="slide-container">
+      <Fade {...fadeProperties}>
+        <div className="each-fade">
+          <div className="image-container">
+            <img src={fadeImages[0]} />
+          </div>
+        </div>
+        <div className="each-fade">
+          <div className="image-container">
+            <img src={fadeImages[1]} />
+          </div>
+        </div>
+        <div className="each-fade">
+          <div className="image-container">
+            <img src={fadeImages[2]} />
+          </div>
+        </div>
+      </Fade>
+    </div>
+  )
+}
+
+export default Slideshow;
