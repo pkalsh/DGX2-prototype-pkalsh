@@ -221,3 +221,10 @@
     width : 300px;
     height : 300px;
 }
+.body{
+	margin : 0px;
+}
+#image{
+	position: relative;
+	z-index : 50;
+}

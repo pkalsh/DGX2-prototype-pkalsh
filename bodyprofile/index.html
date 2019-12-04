@@ -1,19 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class "no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="tabs, inspiration, web design, css, modern, effects, svg" />
+		<meta name="author" content="Codrops" />
     <link rel = "stylesheet" href = "../bodyprofile/static/css/index.css">
-
-
+    <link rel="stylesheet"  href="../bodyprofile/static/css/normalize.css" />
+    <link rel="stylesheet" href="../bodyprofile/static/demo.css" />
+    <link rel="stylesheet"  href="../bodyprofile/static/tabs.css" />
+    <link rel="stylesheet" href="../bodyprofile/static/tabstyles.css" />
+     
     <title>Document</title>
 
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="../bodyprofile/static/js/modernizr.custom.js"></script>
+
 </head>
 <body>
-        <img src = "static/img/navbar.png" alt = "img">
+    <img  src = "static/img/navbar.png" alt = "img">
+        
         <ul class="cbp-ig-grid">
                 <li>
                     <a href="#">
@@ -66,5 +72,40 @@
                 </li>
             </ul>
     
+            <div class="container">
+                <section>
+                    <div class="tabs tabs-style-bar">
+                        <nav>
+                            <ul>
+                                <li><a href="#section-bar-1" ><span>ARM</span></a></li>
+                                <li><a href="#section-bar-2" ><span>ABS</span></a></li>
+                                <li><a href="#section-bar-3" ><span>CHEST</span></a></li>
+                                <li><a href="#section-bar-4" ><span>LEG</span></a></li>
+                                <li><a href="#section-bar-5" ><span>BACK</span></a></li>
+                                <li><a href="#section-bar-5" ><span>SHOULDER</span></a></li>
+                            </ul>
+                        </nav>
+                        <div class="content-wrap">
+                            <section id="section-bar-1"><p>1</p></section>
+                            <section id="section-bar-2"><p>2</p></section>
+                            <section id="section-bar-3"><p>3</p></section>
+                            <section id="section-bar-4"><p>4</p></section>
+                            <section id="section-bar-5"><p>5</p></section>
+                            <section id="section-bar-6"><p>6</p></section>
+                        </div><!-- /content -->
+                    </div><!-- /tabs -->
+                </section>
+                
+            </div><!-- /container -->
+            <script src="js/cbpFWTabs.js"></script>
+            <script>
+                (function() {
+    
+                    [].slice.call( document.querySelectorAll( '.tabs' ) ).forEach( function( el ) {
+                        new CBPFWTabs( el );
+                    });
+    
+                })();
+            </script>
 </body>
 </html>
