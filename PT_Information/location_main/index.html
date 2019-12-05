@@ -4,6 +4,121 @@
 <meta charset="utf-8">
 <title>키워드로 장소검색하고 목록으로 표출하기</title>
 <style>
+.home_container {
+    position: absolute;
+    width: 110px;
+    height: 50px;
+    top:55px;
+    left:43px;
+}
+#btn_home {
+    width: 110px;
+    height: 50px;
+    opacity: 0.0;
+}
+#btn_home:hover {
+    cursor: pointer;
+}
+
+/* nav바 구현 */
+
+#btn_PTInformation {
+    width:120px;
+    height:50px;
+    opacity: 0.0;
+}
+
+#btn_PTInformation:hover {
+    cursor: pointer;
+}
+#btn_UserMatching:hover {
+    cursor: pointer;
+}
+#btn_Feedback:hover {
+    cursor: pointer;
+}
+
+.nav_container {
+    position: absolute;
+}
+
+.selected {
+    position: absolute;
+    border-bottom: 4px solid #dd3459;
+}
+
+.nav_container:hover {
+    border-bottom: 4px solid #dd3459;
+    opacity: 0.3;
+}
+
+#PT_container {
+    width: 90px;
+    height: 50px;
+    top:50px;
+    left:678px;
+}
+#matching_container {
+    width: 160px;
+    height: 50px;
+    top:50px;
+    left:908px;
+}
+#feedback_container {
+    width: 142px;
+    height: 50px;
+    top:50px;
+    left:1195px;    
+}
+
+#btn_UserMatching {
+    width:150px;
+    height:50px;
+    opacity: 0.0;
+}
+
+#btn_Feedback {
+    width:142px;
+    height:50px;
+    opacity: 0.0;
+}
+
+/* 회원가입/로그인 */
+#btn_Login {
+    width: 55px;
+    height: 20px;
+    opacity: 0.0;
+}
+#btn_Login:hover {
+    cursor: pointer;
+}
+
+#btn_Signup {
+    width: 70px;
+    height: 20px;
+    opacity: 0.0;
+}
+#btn_Signup:hover {
+    cursor: pointer;
+}
+
+#login_container {
+    position: absolute;
+    width: 55px;
+    height: 20px;
+    top:20px;
+    left:1825px;
+}
+
+#signup_container {
+    position: absolute;
+    width: 70px;
+    height: 20px;
+    top:20px;
+    left:1732px;  
+}
+
+/* 맵 css */
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 .map_wrap {position:relative;width:100%;height:500px;}
@@ -43,6 +158,27 @@
 </style>
 </head>
 <body>
+
+<div class="home_container">
+    <button id="btn_home" onclick="goToHome()"></button>
+</div>
+<div class="selected", id="PT_container">
+    <button id="btn_PTInformation" onclick="goToPTInformation()"></button>
+</div>
+<div class="nav_container", id="matching_container">
+    <button id="btn_UserMatching" onclick= "goToUserMatching()"></button>
+</div>
+<div class="nav_container", id="feedback_container">
+    <button id="btn_Feedback" onclick= "goToFeedback()"></button>
+</div>
+    
+<div id="login_container">
+    <button id="btn_Login"></button>
+</div>
+<div id="signup_container">
+    <button id="btn_Signup"></button>
+</div>    
+
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
@@ -136,7 +272,8 @@ function displayPlaces(places) {
 
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
-    
+
+
     for ( var i=0; i<places.length; i++ ) {
 
         // 마커를 생성하고 지도에 표시합니다
@@ -148,25 +285,32 @@ function displayPlaces(places) {
         // LatLngBounds 객체에 좌표를 추가합니다
         bounds.extend(placePosition);
 
-        // 마커와 검색결과 항목에 mouseover 했을때
-        // 해당 장소에 인포윈도우에 장소명을 표시합니다
-        // mouseout 했을 때는 인포윈도우를 닫습니다
+        // 마커와 검색결과 항목을 click 했을때
+        // 지도의 중심을 그 위치로 움직인다.
         (function(marker, title) {
-            kakao.maps.event.addListener(marker, 'mouseover', function() {
-                displayInfowindow(marker, title);
+            kakao.maps.event.addListener(marker, 'click', function() {
+                moveMarkerToCenter(marker);
             });
 
-            kakao.maps.event.addListener(marker, 'mouseout', function() {
-                infowindow.close();
-            });
+            // kakao.maps.event.addListener(marker, 'mouseover', function() {
+            //     displayInfowindow(marker, title);
+            // });
 
-            itemEl.onmouseover =  function () {
-                displayInfowindow(marker, title);
-            };
+            // kakao.maps.event.addListener(marker, 'mouseout', function() {
+            //     infowindow.close();
+            // });
 
-            itemEl.onmouseout =  function () {
-                infowindow.close();
-            };
+            itemEl.onclick = function () {
+                moveMarkerToCenter(marker);
+            }
+
+            // itemEl.onmouseover =  function () {
+            //     displayInfowindow(marker, title);
+            // };
+
+            // itemEl.onmouseout =  function () {
+            //     infowindow.close();
+            // };
         })(marker, places[i].place_name);
 
         fragment.appendChild(itemEl);
@@ -179,6 +323,17 @@ function displayPlaces(places) {
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
 }
+
+// 마커를 클릭하면 지도의 중심을 마커로 이동하는 함수
+function moveMarkerToCenter(marker) {
+    // var lat = marker.getPosition();
+    // // 이동할 위도 경도 위치를 생성합니다 
+    // var moveLatLon = new kakao.maps.LatLng(lat.Ga, lat.Ha);
+        
+    // 지도 중심을 부드럽게 이동시킵니다
+    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+    map.panTo(marker.getPosition());                   
+} 
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
