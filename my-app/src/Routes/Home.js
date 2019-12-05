@@ -29,6 +29,8 @@ export default function Home() {
 
   return (
     <React.Fragment>
+      <a href="/PTtmp/tmp.html">Link to local tmp html</a>
+
           <div className="slide-container">
       <Fade {...fadeProperties}>
         <div className="each-fade">
