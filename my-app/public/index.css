@@ -44,7 +44,7 @@
 
   .navBarHomeButton {
     position: absolute;
-    opacity: 0.0;
+    opacity: 0.5;
     top:54px;
     left:42px;
     width: 120px;
@@ -53,7 +53,7 @@
 
   .navBarSignUpButton {
     position: absolute;
-    opacity: 0.0;
+    opacity: 0.5;
     top: 12px;
     left: 1725px;
     width: 80px;
@@ -62,7 +62,7 @@
 
   .navBarSignInButton {
     position: absolute;
-    opacity: 0.0;
+    opacity: 0.5;
     top: 12px;
     left: 1820px;
     width: 65px;
