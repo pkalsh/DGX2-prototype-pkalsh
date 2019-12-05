@@ -8,9 +8,9 @@
 		<meta name="author" content="Codrops" />
     <link rel = "stylesheet" href = "../bodyprofile/static/css/index.css">
     <link rel="stylesheet"  href="../bodyprofile/static/css/normalize.css" />
-    <link rel="stylesheet" href="../bodyprofile/static/demo.css" />
-    <link rel="stylesheet"  href="../bodyprofile/static/tabs.css" />
-    <link rel="stylesheet" href="../bodyprofile/static/tabstyles.css" />
+    <link rel="stylesheet" href="../bodyprofile/static/css/demo.css" />
+    <link rel="stylesheet"  href="../bodyprofile/static/css/tabs.css" />
+    <link rel="stylesheet" href="../bodyprofile/static/css/tabstyles.css" />
      
     <title>Document</title>
 
@@ -19,21 +19,44 @@
 </head>
 <body>
     <img  src = "static/img/navbar.png" alt = "img">
-        
+    <div class="container">
+        <section>
+            <div class="tabs tabs-style-bar">
+                <nav>
+                    <ul>
+                        <li><a href="#section-bar-1" ><span>ARM</span></a></li>
+                        <li><a href="#section-bar-2" ><span>ABS</span></a></li>
+                        <li><a href="#section-bar-3" ><span>CHEST</span></a></li>
+                        <li><a href="#section-bar-4" ><span>LEG</span></a></li>
+                        <li><a href="#section-bar-5" ><span>BACK</span></a></li>
+                        <li><a href="#section-bar-5" ><span>SHOULDER</span></a></li>
+                    </ul>
+                </nav>
+                <div class="content-wrap">
+                    <section id="section-bar-1"><p>1</p> <img  src = "static/img/plusButton.png" alt = "img"></section>
+                    <section id="section-bar-2"><p>2</p><img  src = "static/img/plusButton.png" alt = "img"></section>
+                    <section id="section-bar-3"><p>3</p><img  src = "static/img/plusButton.png" alt = "img"></section>
+                    <section id="section-bar-4"><p>4</p><img  src = "static/img/plusButton.png" alt = "img"></section>
+                    <section id="section-bar-5"><p>5</p><img  src = "static/img/plusButton.png" alt = "img"></section>
+                    <section id="section-bar-6"><p>6</p><img  src = "static/img/plusButton.png" alt = "img"></section>
+                </div><!-- /content -->
+            </div><!-- /tabs -->
+        </section>   
+    </div><!-- /container -->
         <ul class="cbp-ig-grid">
                 <li>
                     <a href="#">
                         <!-- <span class="cbp-ig-icon cbp-ig-icon-shoe"></span> -->
                         <!-- <i class = "icon-repeat">dfd</i> -->
-                        <img class = "img_channel" src = "static/img/muscles.png" alt = "img">
+                        <img class = "img_channel" src = "static/img/Arm.png" alt = "img">
                         <h3 class="cbp-ig-title">ARM</h3>
-                        <span class="cbp-ig-category">Start</span>
+                        <span class="cbp-ig-category">시작하기</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <!-- <span class="cbp-ig-icon cbp-ig-icon-ribbon"></span> -->
-                        <img class = "img_channel" src = "static/img/muscles.png" alt = "img">
+                        <img class = "img_channel" src = "static/img/ABS.png" alt = "img">
                         <h3 class="cbp-ig-title">ABS</h3>
                         <span class="cbp-ig-category">Start</span>
                     </a>
@@ -41,7 +64,7 @@
                 <li>
                     <a href="#">
                         <!-- <span class="cbp-ig-icon cbp-ig-icon-milk"></span> -->
-                        <img class = "img_channel" src = "static/img/muscles.png" alt = "img">
+                        <img class = "img_channel" src = "static/img/CHEST.png" alt = "img">
                         <h3 class="cbp-ig-title">CHEST</h3>
                         <span class="cbp-ig-category">Start</span>
                     </a>
@@ -49,7 +72,7 @@
                 <li>
                     <a href="#">
                         <!-- <span class="cbp-ig-icon cbp-ig-icon-whippy"></span> -->
-                        <img class = "img_channel" src = "static/img/muscles.png" alt = "img">
+                        <img class = "img_channel" src = "static/img/LEG.png" alt = "img">
                         <h3 class="cbp-ig-title">LEG</h3>
                         <span class="cbp-ig-category">Start</span>
                     </a>
@@ -57,7 +80,7 @@
                 <li>
                     <a href="#">
                         <!-- <span class="cbp-ig-icon cbp-ig-icon-spectacles"></span> -->
-                        <img class = "img_channel" src = "static/img/muscles.png" alt = "img">
+                        <img class = "img_channel" src = "static/img/BACK.png" alt = "img">
                         <h3 class="cbp-ig-title">BACK</h3>
                         <span class="cbp-ig-category">Start</span>
                     </a>
@@ -65,39 +88,17 @@
                 <li>
                     <a href="#">
                         <!-- <span class="cbp-ig-icon cbp-ig-icon-doumbek"></span> -->
-                        <img class = "img_channel" src = "static/img/muscles.png" alt = "img">
+                        <img class = "img_channel" src = "static/img/Shoulder.png" alt = "img">
                         <h3 class="cbp-ig-title">SHOULDER</h3>
                         <span class="cbp-ig-category">Start</span>
                     </a>
                 </li>
             </ul>
     
-            <div class="container">
-                <section>
-                    <div class="tabs tabs-style-bar">
-                        <nav>
-                            <ul>
-                                <li><a href="#section-bar-1" ><span>ARM</span></a></li>
-                                <li><a href="#section-bar-2" ><span>ABS</span></a></li>
-                                <li><a href="#section-bar-3" ><span>CHEST</span></a></li>
-                                <li><a href="#section-bar-4" ><span>LEG</span></a></li>
-                                <li><a href="#section-bar-5" ><span>BACK</span></a></li>
-                                <li><a href="#section-bar-5" ><span>SHOULDER</span></a></li>
-                            </ul>
-                        </nav>
-                        <div class="content-wrap">
-                            <section id="section-bar-1"><p>1</p></section>
-                            <section id="section-bar-2"><p>2</p></section>
-                            <section id="section-bar-3"><p>3</p></section>
-                            <section id="section-bar-4"><p>4</p></section>
-                            <section id="section-bar-5"><p>5</p></section>
-                            <section id="section-bar-6"><p>6</p></section>
-                        </div><!-- /content -->
-                    </div><!-- /tabs -->
-                </section>
+            
                 
-            </div><!-- /container -->
-            <script src="js/cbpFWTabs.js"></script>
+            
+            <script src="../bodyprofile/static/js/cbpFWTabs.js"></script>
             <script>
                 (function() {
     
