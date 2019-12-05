@@ -17,7 +17,7 @@
 .cbp-ig-grid {
 	list-style: none;
 	padding: 0 0 50px 0;
-	margin-left: 400px;
+	margin-left: 700px;
 }
 
 /* Clear floats */
@@ -35,7 +35,7 @@
 .cbp-ig-grid li {
 	width: 27%;
 	float: left;
-	height: 440px;
+	height: 330px;
 	text-align: center;
 	border-top: 1px solid #ddd;
 	
@@ -86,8 +86,8 @@
 /* title element */
 .cbp-ig-grid .cbp-ig-title {
 	font-family: 'TmonMonsori';
-	margin: 20px 0 10px 0;
-	padding: 20px 0 0 0;
+	margin: 0px 0 0px 0;
+	padding: 10px 0 0 0;
 	font-size: 2em;
 	position: relative;
 	-webkit-transition: -webkit-transform 0.2s;
@@ -162,7 +162,7 @@
 
 .cbp-ig-grid li > a:hover .cbp-ig-title:before {
 	background: #fff;
-	margin-top: 80px;
+	margin-top: 60px;
 }
 
 @media screen and (max-width: 62.75em) {
@@ -219,5 +219,13 @@
 /* 수정하거나 추가할 시에 밑에 추가부탁드려요!! */
 .img_channel{
     width : 300px;
-    height : 300px;
+	height : 250px;
+	
+}
+.body{
+	margin : 0px;
+}
+#image{
+	position: relative;
+	z-index : 50;
 }
