@@ -38,6 +38,33 @@
   }
 
   .navBar {
-    width: 100%;
+    width: 1920px;
     height: auto;
+  }
+
+  .navBarHomeButton {
+    position: absolute;
+    opacity: 0.0;
+    top:54px;
+    left:42px;
+    width: 120px;
+    height: 60px;
+  }
+
+  .navBarSignUpButton {
+    position: absolute;
+    opacity: 0.0;
+    top: 12px;
+    left: 1725px;
+    width: 80px;
+    height: 35px;
+  }
+
+  .navBarSignInButton {
+    position: absolute;
+    opacity: 0.0;
+    top: 12px;
+    left: 1820px;
+    width: 65px;
+    height: 35px;
   }

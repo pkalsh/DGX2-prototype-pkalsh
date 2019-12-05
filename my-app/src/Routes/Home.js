@@ -1,5 +1,8 @@
 import React from 'react';
 import { Fade } from 'react-slideshow-image';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
 
 const fadeImages = [
   'Images/test1.png',
@@ -17,9 +20,16 @@ const fadeProperties = {
   }
 }
 
-const Slideshow = () => {
+const useStyles = makeStyles(theme => ({
+
+}));
+
+export default function Home() {
+  const classes = useStyles();
+
   return (
-    <div className="slide-container">
+    <React.Fragment>
+          <div className="slide-container">
       <Fade {...fadeProperties}>
         <div className="each-fade">
           <div className="image-container">
@@ -38,7 +48,6 @@ const Slideshow = () => {
         </div>
       </Fade>
     </div>
+    </React.Fragment>
   )
 }
-
-export default Slideshow;
