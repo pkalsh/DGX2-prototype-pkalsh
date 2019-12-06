@@ -48,35 +48,49 @@
                 <img src="../Images/back.png">
             </div>
         </a>
+        <div class="icon-menu-container">
+            <a href="../PT_coach/index.html">
+                <div class="icon-menu">
+                    <div class="icon-holder">
+                        <img src="../Images/coach1.png" alt="">
+                    </div>
+                    <span>트레이너</span>
+                </div>
+            </a>
 
-        <a href="../PT_coach/index.html">
-            <div id="coach_container">
-                <img src="../Images/coach1.png" alt="">
-            </div>
-        </a>
-
-        <a href="./index.html">
-            <div id="location_container">
-                <img src="../Images/location1.png" alt="">
-            </div>
-        </a>
+            <a href="./index.html">
+                <div class="icon-menu">
+                    <div class="icon-holder">
+                        <img src="../Images/location1.png" alt="">
+                    </div>
+                    <span>지도로 찾기</span>
+                </div>
+            </a>
+        </div>
     </div>
 
     <div class="map_wrap">
         <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
     
-        <div id="menu_wrap" class="bg_white">
-            <div class="option">
-                <div>
-                    <form onsubmit="searchPlaces(); return false;">
-                        키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
-                        <button type="submit">검색하기</button> 
-                    </form>
+        
+        <div class="search-container">
+            <div>
+                <div class="location-view">
+                    <div class="view-row-wrap">
+                        <div class="view-row">
+                            <span class="text-wrap">서울 동작구 흑석동</span>
+                        </div>
+                    </div>
                 </div>
+                <form onsubmit="searchPlaces(); return false;">
+                    <input type="text" placeholder="동, 역 이름으로 검색하여 이동" id="keyword" size="15"> 
+                    <button type="submit">검색하기</button> 
+                </form>
             </div>
-            <hr>
-            <ul id="placesList"></ul>
-            <div id="pagination"></div>
+        </div>
+        <hr>
+        <ul id="placesList"></ul>
+        <div id="pagination"></div>
         </div>
     </div>
 </body>
@@ -98,11 +112,8 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  
 
-// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-
-// 키워드로 장소를 검색합니다
-searchPlaces();
+// // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+// var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
@@ -126,8 +137,6 @@ function placesSearchCB(data, status, pagination) {
         // 검색 목록과 마커를 표출합니다
         displayPlaces(data);
 
-        // 페이지 번호를 표출합니다
-        displayPagination(pagination);
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -144,7 +153,6 @@ function placesSearchCB(data, status, pagination) {
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
-
     var listEl = document.getElementById('placesList'), 
     menuEl = document.getElementById('menu_wrap'),
     fragment = document.createDocumentFragment(), 
@@ -176,25 +184,10 @@ function displayPlaces(places) {
                 moveMarkerToCenter(marker);
             });
 
-            // kakao.maps.event.addListener(marker, 'mouseover', function() {
-            //     displayInfowindow(marker, title);
-            // });
-
-            // kakao.maps.event.addListener(marker, 'mouseout', function() {
-            //     infowindow.close();
-            // });
-
             itemEl.onclick = function () {
                 moveMarkerToCenter(marker);
             }
 
-            // itemEl.onmouseover =  function () {
-            //     displayInfowindow(marker, title);
-            // };
-
-            // itemEl.onmouseout =  function () {
-            //     infowindow.close();
-            // };
         })(marker, places[i].place_name);
 
         fragment.appendChild(itemEl);
@@ -209,11 +202,7 @@ function displayPlaces(places) {
 }
 
 // 마커를 클릭하면 지도의 중심을 마커로 이동하는 함수
-function moveMarkerToCenter(marker) {
-    // var lat = marker.getPosition();
-    // // 이동할 위도 경도 위치를 생성합니다 
-    // var moveLatLon = new kakao.maps.LatLng(lat.Ga, lat.Ha);
-        
+function moveMarkerToCenter(marker) {     
     // 지도 중심을 부드럽게 이동시킵니다
     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
     map.panTo(marker.getPosition());                   
@@ -264,52 +253,30 @@ function addMarker(position, idx, title) {
     return marker;
 }
 
+// 현재 위치에 다른 마커를 설정
+var imageSrc = 'https://raw.githubusercontent.com/kouz95/DGX2-prototype/master/Components/LocationMark.png', // 마커이미지의 주소입니다    
+    imageSize = new kakao.maps.Size(64, 64), // 마커이미지의 크기입니다
+    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      
+// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+    markerPosition = new kakao.maps.LatLng(37.50406409257192, 126.95587230092029); // 마커가 표시될 위치입니다
+
+// 마커를 생성합니다
+var marker = new kakao.maps.Marker({
+    position: markerPosition, 
+    image: markerImage // 마커이미지 설정
+});
+
+// 마커가 지도 위에 표시되도록 설정합니다
+marker.setMap(map);  
+
 // 지도 위에 표시되고 있는 마커를 모두 제거합니다
 function removeMarker() {
     for ( var i = 0; i < markers.length; i++ ) {
         markers[i].setMap(null);
     }   
     markers = [];
-}
-
-// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(pagination) {
-    var paginationEl = document.getElementById('pagination'),
-        fragment = document.createDocumentFragment(),
-        i; 
-
-    // 기존에 추가된 페이지번호를 삭제합니다
-    while (paginationEl.hasChildNodes()) {
-        paginationEl.removeChild (paginationEl.lastChild);
-    }
-
-    for (i=1; i<=pagination.last; i++) {
-        var el = document.createElement('a');
-        el.href = "#";
-        el.innerHTML = i;
-
-        if (i===pagination.current) {
-            el.className = 'on';
-        } else {
-            el.onclick = (function(i) {
-                return function() {
-                    pagination.gotoPage(i);
-                }
-            })(i);
-        }
-
-        fragment.appendChild(el);
-    }
-    paginationEl.appendChild(fragment);
-}
-
-// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-// 인포윈도우에 장소명을 표시합니다
-function displayInfowindow(marker, title) {
-    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
-
-    infowindow.setContent(content);
-    infowindow.open(map, marker);
 }
 
  // 검색결과 목록의 자식 Element를 제거하는 함수입니다
