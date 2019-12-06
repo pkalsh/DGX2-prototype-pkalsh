@@ -74,23 +74,24 @@
     
         
         <div class="search-container">
-            <div>
+            <div id="menu-wrap">
                 <div class="location-view">
                     <div class="view-row-wrap">
                         <div class="view-row">
-                            <span class="text-wrap">서울 동작구 흑석동</span>
+                            <span class="text-wrap">서울 동작구 상도동</span>
                         </div>
                     </div>
                 </div>
                 <form onsubmit="searchPlaces(); return false;">
-                    <input type="text" placeholder="동, 역 이름으로 검색하여 이동" id="keyword" size="15"> 
-                    <button type="submit">검색하기</button> 
+                    <div class="search-wrap">
+                        <input type="text" placeholder="동, 역 이름으로 검색하여 이동" id="keyword" size="15" style="font-size: 20px;">
+                        <button class="btn_search" type="submit" style="width:38px; height:38px;"></button>
+                        <img src="https://www.da-gym.co.kr/assets/header/ic_search.png" alt=""> 
+                    </div> 
                 </form>
+                <ul id="placesList"></ul>
             </div>
         </div>
-        <hr>
-        <ul id="placesList"></ul>
-        <div id="pagination"></div>
         </div>
     </div>
 </body>
@@ -102,7 +103,7 @@ var markers = [];
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(37.50406409257192, 126.95587230092029), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };  
 
@@ -117,61 +118,26 @@ var ps = new kakao.maps.services.Places();
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
-
-    var keyword = document.getElementById('keyword').value;
-
-    if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
-        return false;
-    }
-
-    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch( keyword, placesSearchCB); 
+    alert('장소 검색 기능은 준비중입니다.') 
 }
 
-// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-function placesSearchCB(data, status, pagination) {
-    if (status === kakao.maps.services.Status.OK) {
-
-        // 정상적으로 검색이 완료됐으면
-        // 검색 목록과 마커를 표출합니다
-        displayPlaces(data);
-
-
-    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-
-        alert('검색 결과가 존재하지 않습니다.');
-        return;
-
-    } else if (status === kakao.maps.services.Status.ERROR) {
-
-        alert('검색 결과 중 오류가 발생했습니다.');
-        return;
-
-    }
-}
+// 흑석동 헬스장에 대한 결과를 10개만 리스트에 올립니다.
+ps.keywordSearch('상도역 헬스장', displayPlaces)
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
     var listEl = document.getElementById('placesList'), 
     menuEl = document.getElementById('menu_wrap'),
-    fragment = document.createDocumentFragment(), 
     bounds = new kakao.maps.LatLngBounds(), 
     listStr = '';
-    
-    // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
 
-    // 지도에 표시되고 있는 마커를 제거합니다
-    removeMarker();
-
-
-    for ( var i=0; i<places.length; i++ ) {
-
+    for ( var i=0; i<15; i++ ) {
+        
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+            fragment = document.createDocumentFragment(), 
             marker = addMarker(placePosition, i), 
-            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+        itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
@@ -182,23 +148,39 @@ function displayPlaces(places) {
         (function(marker, title) {
             kakao.maps.event.addListener(marker, 'click', function() {
                 moveMarkerToCenter(marker);
+                initMarkers();
+                var markerImage = new kakao.maps.MarkerImage(
+                    "https://www.da-gym.co.kr/assets/map/im_selected@3x.png",
+                    new kakao.maps.Size(25, 31), new kakao.maps.Point(marker.position));
+                marker.setImage(markerImage);
+                // console.log(markers);
             });
 
             itemEl.onclick = function () {
                 moveMarkerToCenter(marker);
+                var markerImage = new kakao.maps.MarkerImage(
+                    "https://www.da-gym.co.kr/assets/map/im_selected@3x.png",
+                    new kakao.maps.Size(25, 31), new kakao.maps.Point(marker.position));
+                marker.setImage(markerImage);
             }
 
         })(marker, places[i].place_name);
 
         fragment.appendChild(itemEl);
+        listEl.appendChild(fragment);
     }
-
-    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
     listEl.appendChild(fragment);
-    menuEl.scrollTop = 0;
+}
 
-    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-    map.setBounds(bounds);
+function initMarkers() {
+    for (var marker in markers) {
+        markers.forEach(function(marker) {
+            var markerImage = new kakao.maps.MarkerImage(
+                    "https://www.da-gym.co.kr/assets/map/im_pin@3x.png",
+                    new kakao.maps.Size(25, 31), new kakao.maps.Point(marker.position));
+            marker.setImage(markerImage);
+        });
+    } 
 }
 
 // 마커를 클릭하면 지도의 중심을 마커로 이동하는 함수
@@ -210,11 +192,9 @@ function moveMarkerToCenter(marker) {
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
-
     var el = document.createElement('li'),
-    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-                '<div class="info">' +
-                '   <h5>' + places.place_name + '</h5>';
+    itemStr = '<div class="list-item">' +
+                '   <h1>' + places.place_name + '</h1>';
 
     if (places.road_address_name) {
         itemStr += '    <span>' + places.road_address_name + '</span>' +
@@ -234,14 +214,9 @@ function getListItem(index, places) {
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, title) {
-    var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-        imgOptions =  {
-            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+    var imageSrc = 'https://www.da-gym.co.kr/assets/map/im_pin@3x.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        imageSize = new kakao.maps.Size(25, 31),  // 마커 이미지의 크기
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
             marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
             image: markerImage 
@@ -271,13 +246,6 @@ var marker = new kakao.maps.Marker({
 // 마커가 지도 위에 표시되도록 설정합니다
 marker.setMap(map);  
 
-// 지도 위에 표시되고 있는 마커를 모두 제거합니다
-function removeMarker() {
-    for ( var i = 0; i < markers.length; i++ ) {
-        markers[i].setMap(null);
-    }   
-    markers = [];
-}
 
  // 검색결과 목록의 자식 Element를 제거하는 함수입니다
 function removeAllChildNods(el) {   
