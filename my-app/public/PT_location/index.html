@@ -9,50 +9,51 @@
     <title>DGX2</title>
 </head>
 <body>
-    <img src="../Images/NavBar_NoLogin.png">
-    <a href="../">
-        <div class="home_container">
-            <button id="btn_home"></button>
-        </div>
-    </a>
-    <a href="../pt-main">
-        <div class="selected", id="PT_container">
-            <button id="btn_PTInformation"></button>
-        </div>
-    </a>
-    <a href="../usermatching-main">
-        <div class="nav_container", id="matching_container">
-            <button id="btn_UserMatching"></button>
-        </div>
-    </a>
-    <a href="../feedback-main">
-        <div class="nav_container", id="feedback_container">
-            <button id="btn_Feedback"></button>
-        </div>
-    </a>
+    <div class="nav-wrap">
+        <img src="../Images/NavBar_NoLogin.png">
+        <a href="../">
+            <div class="home_container">
+                <button id="btn_home"></button>
+            </div>
+        </a>
+        <a href="../pt-main">
+            <div class="selected", id="PT_container">
+                <button id="btn_PTInformation"></button>
+            </div>
+        </a>
+        <a href="../usermatching-main">
+            <div class="nav_container", id="matching_container">
+                <button id="btn_UserMatching"></button>
+            </div>
+        </a>
+        <a href="../feedback-main">
+            <div class="nav_container", id="feedback_container">
+                <button id="btn_Feedback"></button>
+            </div>
+        </a>
 
-    <a href="../signin">
-        <div id="signin_container">
-            <button id="btn_Signin"></button>
-        </div>
-    </a>
-    <a href="../signup">
-        <div id="signup_container">
-            <button id="btn_Signup"></button>
-        </div>
-    </a>
-
+        <a href="../signin">
+            <div id="signin_container">
+                <button id="btn_Signin"></button>
+            </div>
+        </a>
+        <a href="../signup">
+            <div id="signup_container">
+                <button id="btn_Signup"></button>
+            </div>
+        </a>
+    </div>
     <div class="PT_navbar">
         <a href="../pt-main">
-            <div id="back_container">
-                <img src="../Images/back.png">
+            <div id="back-container">
+                <img src="../Images/back.png" style="color:#58595b;">
             </div>
         </a>
         <div class="icon-menu-container">
             <a href="../PT_coach/index.html">
                 <div class="icon-menu">
                     <div class="icon-holder">
-                        <img src="../Images/coach1.png" alt="">
+                        <img src="../Images/coach1.png" alt="" style="color:#58595b;">
                     </div>
                     <span>트레이너</span>
                 </div>
@@ -61,7 +62,7 @@
             <a href="./index.html">
                 <div class="icon-menu">
                     <div class="icon-holder">
-                        <img src="../Images/location1.png" alt="">
+                        <img src="../Images/location1.png" alt="" style="color:#58595b;">
                     </div>
                     <span>지도로 찾기</span>
                 </div>
@@ -89,10 +90,23 @@
                         <img src="https://www.da-gym.co.kr/assets/header/ic_search.png" alt=""> 
                     </div> 
                 </form>
-                <ul id="placesList"></ul>
+                <div class="virtual-scroller">
+                    <ul id="placesList"></ul>
+                </div>
             </div>
         </div>
+
+        <!-- The Modal -->
+        <div id="myModal" class="gym-item-container">
+            <div class="gym-img">
+                <span class="close">&times;</span>
+            </div>
+            <div class="gym-info-container">
+                <div class="gym-info-name"></div>
+                <div class="gym-info-address"></div>
+            </div>
         </div>
+
     </div>
 </body>
 
@@ -107,8 +121,16 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         level: 3 // 지도의 확대 레벨
     };  
 
+// 모달 컴포넌트 가져옴
+var modal = document.getElementById('myModal');
+
 // 지도를 생성합니다    
 var map = new kakao.maps.Map(mapContainer, mapOption); 
+map.setMaxLevel(7);
+
+// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+var zoomControl = new kakao.maps.ZoomControl();
+map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  
@@ -131,8 +153,7 @@ function displayPlaces(places) {
     bounds = new kakao.maps.LatLngBounds(), 
     listStr = '';
 
-    for ( var i=0; i<15; i++ ) {
-        
+    for ( var i=0; i<6; i++ ) {        
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             fragment = document.createDocumentFragment(), 
@@ -147,19 +168,21 @@ function displayPlaces(places) {
         // 지도의 중심을 그 위치로 움직인다.
         (function(marker, title) {
             kakao.maps.event.addListener(marker, 'click', function() {
+                console.log(marker);
                 moveMarkerToCenter(marker);
                 initMarkers();
                 var markerImage = new kakao.maps.MarkerImage(
-                    "https://www.da-gym.co.kr/assets/map/im_selected@3x.png",
+                    "../Images/im_selected@3x.png",
                     new kakao.maps.Size(25, 31), new kakao.maps.Point(marker.position));
                 marker.setImage(markerImage);
-                // console.log(markers);
+                modal.style.display = "block";
             });
 
             itemEl.onclick = function () {
                 moveMarkerToCenter(marker);
+                initMarkers();
                 var markerImage = new kakao.maps.MarkerImage(
-                    "https://www.da-gym.co.kr/assets/map/im_selected@3x.png",
+                    "../Images/im_selected@3x.png",
                     new kakao.maps.Size(25, 31), new kakao.maps.Point(marker.position));
                 marker.setImage(markerImage);
             }
@@ -196,15 +219,9 @@ function getListItem(index, places) {
     itemStr = '<div class="list-item">' +
                 '   <h1>' + places.place_name + '</h1>';
 
-    if (places.road_address_name) {
-        itemStr += '    <span>' + places.road_address_name + '</span>' +
-                    '   <span class="jibun gray">' +  places.address_name  + '</span>';
-    } else {
-        itemStr += '    <span>' +  places.address_name  + '</span>'; 
-    }
-                 
-      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-                '</div>';           
+    itemStr += '   <span class="gym-address">' +  places.road_address_name  + '</span>';             
+    // itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+    //             '</div>';           
 
     el.innerHTML = itemStr;
     el.className = 'item';
@@ -244,15 +261,23 @@ var marker = new kakao.maps.Marker({
 });
 
 // 마커가 지도 위에 표시되도록 설정합니다
-marker.setMap(map);  
+marker.setMap(map); 
+ 
+ // Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];                                          
 
+ // When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
 
- // 검색결과 목록의 자식 Element를 제거하는 함수입니다
-function removeAllChildNods(el) {   
-    while (el.hasChildNodes()) {
-        el.removeChild (el.lastChild);
+ // When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
     }
 }
+
 </script>
 </html>
 

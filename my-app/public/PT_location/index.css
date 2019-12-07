@@ -1,3 +1,14 @@
+@font-face {
+    font-family: NanumSquareWeb;
+    src: local(NanumSquareR),
+         local(NanumSquare),
+         url(NanumSquareR.eot?#iefix) format('embedded-opentype'),
+         url(NanumSquareR.woff) format('woff'),
+         url(NanumSquareR.ttf) format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    unicode-range: U+0-10FFFF;
+}
 /* 맵 css */
 #map {width:100%;height:100%;position:relative;overflow:hidden;}
 .map_wrap {
@@ -28,6 +39,8 @@
     -webkit-overflow-scrolling: touch;
     color: #58595b;
 }
+#menu-wrap { height:522px; }
+
 .search-wrap {
     height: auto !important;
     line-height: 1 !important;
@@ -79,19 +92,26 @@
  }
 .search-container p {margin:10px 0;}  
 .search-container button {margin-left:5px;}
+.virtual-scroller {
+    width: 100%;
+    height: calc(100% - 206px);
+    overflow-y: scroll;
+    overflow-x: visible;
+}
 #placesList li {list-style: none;}
-#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
 #placesList .item span {display: block;margin-top:4px;}
 #placesList .list-item h1, #placesList .list-item {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 #placesList .item .info{padding:10px 0 10px 55px;}
-#placesList .info .gray {color:#8a8a8a;}
-#placesList .info .jibun {padding-left:26px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+/* #placesList .info .gray {color:#8a8a8a;} */
+/* #placesList .info .jibun {padding-left:26px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;} */
 #placesList .info .tel {color:#009900;}
 .list-item {
     padding: 30px 0;
     margin: 0 30px;
     border-bottom: 1px solid #e8e9ea;
     cursor: pointer;
+    font-family: NanumSquareWeb;
+    src: url(NanumSquareR.woff) format('woff')
 }
 .list-item h1 {
     font-size: 17px;
@@ -101,12 +121,15 @@
     margin: 0;
     margin-bottom: 5px;
 }
-.list-item span {
+.gym-address {
     font-size: 14px;
     font-weight: normal;
     padding: 0;
     margin: 0;
     margin-bottom: 25px;
+}
+.list-item:hover {
+    color: #dd3459;
 }
 
 .btn_search {
@@ -243,7 +266,7 @@
     padding-right: 150px;
 }
 
-#back_container {
+#back-container {
     float: left;
     display: inline-block;
     margin-top: 30px;
@@ -251,6 +274,20 @@
 
 .icon-menu-container > a {
     text-decoration: none;
+}
+.icon-menu-container > a:visited {
+    color: #58595b;
+}
+.icon-menu-container > a:active {
+    color: #58595b;
+}
+.icon-holder > img {
+    -webkit-filter: opacity(.5) drop-shadow(0 0 0 #58595b);
+    filter: opacity(.5);
+}
+#back-container > img {
+    -webkit-filter: opacity(.5) drop-shadow(0 0 0 #58595b);
+    filter: opacity(.5);
 }
 
 .icon-menu-container {
@@ -264,10 +301,13 @@
     display: inline-block;
     text-align: center;
     margin-left: 25px;
-    transition: transform 0.2s;
+}
+
+.icon-menu:hover {
     cursor: pointer;
     outline: none;
 }
+
 
 .icon-holder {
     position: relative;
@@ -281,4 +321,40 @@ span {
     font-size: 10px;
     line-height: 1;
     margin-top: 8px;
+}
+
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */                          
+}
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
