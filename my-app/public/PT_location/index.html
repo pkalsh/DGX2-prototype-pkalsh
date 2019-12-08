@@ -96,18 +96,19 @@
             </div>
         </div>
 
-        <!-- The Modal -->
+          <!-- The Modal -->
         <div id="myModal" class="gym-item-container">
-            <div class="gym-img">
-                <span class="close">&times;</span>
+            <div id="gym-img">
             </div>
-            <div class="gym-info-container">
-                <div class="gym-info-name"></div>
-                <div class="gym-info-address"></div>
-            </div>
+            <a id= "gym-info-link" href="#" style = "text-decoration: none;">
+                <div class="gym-info-container">
+                    <div class="gym-info-name"></div>
+                    <div class="gym-info-address"></div>
+                </div>
+            </a>
         </div>
-
     </div>
+
 </body>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=23559dd393842e4a7100251bdeed5f33&libraries=services"></script>
@@ -135,6 +136,7 @@ map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  
 
+
 // // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 // var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
@@ -159,6 +161,7 @@ function displayPlaces(places) {
             fragment = document.createDocumentFragment(), 
             marker = addMarker(placePosition, i), 
         itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+        marker.setZIndex(i+1);
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
@@ -168,14 +171,22 @@ function displayPlaces(places) {
         // 지도의 중심을 그 위치로 움직인다.
         (function(marker, title) {
             kakao.maps.event.addListener(marker, 'click', function() {
-                console.log(marker);
                 moveMarkerToCenter(marker);
                 initMarkers();
                 var markerImage = new kakao.maps.MarkerImage(
                     "../Images/im_selected@3x.png",
                     new kakao.maps.Size(25, 31), new kakao.maps.Point(marker.position));
                 marker.setImage(markerImage);
+                // 모달을 띄운다.
                 modal.style.display = "block";
+                document.getElementById("gym-img").innerHTML = '<img class="img-content" src="./Images/gym-img' + marker.getZIndex() + '.jpg">';
+
+                document.getElementsByClassName("gym-info-name")[0].innerHTML = '<strong style="font-weight:600; font-size:20px; letter-spacing: -.3px;">' + places[marker.getZIndex() - 1].place_name + '</strong>';                                                
+                document.getElementsByClassName("gym-info-address")[0].innerHTML = '<span style="font-size: 14px; letter-spacing: -.3px;">' + places[marker.getZIndex() - 1].road_address_name + '</span>';
+                
+                var pageNum = marker.getZIndex() - 1;
+                var linkPage = './gym' + pageNum + '/index.html';
+                document.getElementById("gym-info-link").setAttribute('href', linkPage);
             });
 
             itemEl.onclick = function () {
@@ -185,6 +196,11 @@ function displayPlaces(places) {
                     "../Images/im_selected@3x.png",
                     new kakao.maps.Size(25, 31), new kakao.maps.Point(marker.position));
                 marker.setImage(markerImage);
+                // 모달을 띄운다.
+                modal.style.display = "block";
+                document.getElementById("gym-img").innerHTML = '<img class="img-content" src="./Images/gym-img' + marker.getZIndex() + '.jpg">';
+                document.getElementsByClassName("gym-info-name")[0].innerHTML = '<strong style="font-weight:600; font-size:20px; letter-spacing: -.3px;">' + places[marker.getZIndex() - 1].place_name + '</strong>';                                                
+                document.getElementsByClassName("gym-info-address")[0].innerHTML = '<span style="font-size: 14px; letter-spacing: -.3px;">' + places[marker.getZIndex() - 1].road_address_name + '</span>';
             }
 
         })(marker, places[i].place_name);
@@ -228,17 +244,18 @@ function getListItem(index, places) {
 
     return el;
 }
-
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, title) {
-    var imageSrc = 'https://www.da-gym.co.kr/assets/map/im_pin@3x.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+    console.log(idx + '\n');
+    console.log(markers);
+    var imageSrc = 'https://www.da-gym.co.kr/assets/map/im_pin@3x.png', 
         imageSize = new kakao.maps.Size(25, 31),  // 마커 이미지의 크기
         markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
             marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
             image: markerImage 
         });
-
+    
     marker.setMap(map); // 지도 위에 마커를 표출합니다
     markers.push(marker);  // 배열에 생성된 마커를 추가합니다
 
@@ -262,22 +279,13 @@ var marker = new kakao.maps.Marker({
 
 // 마커가 지도 위에 표시되도록 설정합니다
 marker.setMap(map); 
- 
- // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];                                          
 
- // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
- // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener("click", function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
-}
+});
 
 </script>
 </html>
-
